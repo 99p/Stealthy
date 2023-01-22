@@ -21,12 +21,14 @@ public class PlayerBehavior : MonoBehaviour
     private Rigidbody _rb;
     
     private CapsuleCollider _col;
+    private GameBehavior _gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameBehavior>();
     }
 
     // Update is called once per frame
@@ -84,5 +86,11 @@ public class PlayerBehavior : MonoBehaviour
             QueryTriggerInteraction.Ignore); //トリガーとして設定された子ライダーを対象とするか
         
         return grounded;
+    }
+    
+    private void OnCollisionEnter(Collision collision) {
+        if(collision.gameObject.name == "Enemy"){
+            _gameManager.HP -= 1;
+        }
     }
 }
