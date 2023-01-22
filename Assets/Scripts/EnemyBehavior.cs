@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    public Transform patrolRoute;
+    public List<Transform> locations;
+
+    private int locationIndex = 0;
+    private NavMeshAgent agent;
+
     private void OnTriggerEnter(Collider other) {
         if(other.name == "Player"){
             Debug.Log("<color=red>Attack!!!!</color>");
@@ -19,12 +26,18 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+        InitializePatrolRoute();
+        MoveToNextPatrolLocation();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void InitializePatrolRoute(){
+        foreach(Transform child in patrolRoute){
+            locations.Add(child);
+        }
+    }
+    
+    void MoveToNextPatrolLocation(){
+        agent.destination = locations[locationIndex].position;
     }
 }
