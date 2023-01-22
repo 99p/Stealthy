@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using CustomExtensions;
 
-public class GameBehavior : MonoBehaviour
+public class GameBehavior : MonoBehaviour, IManager
 {
+    private string _state;
+    public string State{
+        get { return _state; }
+        set { _state = value; }
+    }
+
     public string labelText = "4つのアイテムを集めて自由を勝ち取ろう！";
     public int maxItems = 4;
     
@@ -43,11 +50,6 @@ public class GameBehavior : MonoBehaviour
         }
     }
     
-    void RestartLevel(){
-        SceneManager.LoadScene(0);
-        Time.timeScale = 1.0f;
-    }
-    
     private void OnGUI() {
         GUI.Box(new Rect(20, 20, 150, 25), $"Player's HP: {_playerHP}");
         GUI.Box(new Rect(20, 50 ,150, 25), $"集めたアイテム: {_itemsCollected}");
@@ -55,13 +57,23 @@ public class GameBehavior : MonoBehaviour
 
         if(showWinScreen){
             if(GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 50, 200, 100), "You WIN!!")){
-                RestartLevel();
+                Utilities.RestartLevel(0);
             };
         }
         if(showLossScreen){
             if(GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "U Lose!!")){
-                RestartLevel();
+                Utilities.RestartLevel();
             }
         }
+    }
+    
+    private void Start() {
+        Initialize();
+    }
+    
+    public void Initialize(){
+        _state = "Managerの初期化を終えました";
+        _state.FancyDebug();
+        Debug.Log(_state);
     }
 }
