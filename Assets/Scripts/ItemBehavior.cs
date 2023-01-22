@@ -8,7 +8,7 @@ public class ItemBehavior : MonoBehaviour
     private void OnCollisionEnter(Collision collision) {
         if(collision.gameObject.name == "Player"){
             Destroy(this.transform.parent.gameObject);
-            print("<color=yellow>Item collected!</color>");
+            Debug.Log("<color=yellow>Item collected!</color>");
         }
 
     }
