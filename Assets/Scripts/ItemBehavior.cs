@@ -16,6 +16,7 @@ public class ItemBehavior : MonoBehaviour
             Destroy(this.transform.parent.gameObject);
             Debug.Log("<color=yellow>Item collected!</color>");
             gameManager.Items += 1;
+            gameManager.PrintLootReport();
         }
     }
 }

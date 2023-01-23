@@ -21,6 +21,9 @@ public static class Utilities
     }
     
     public static bool RestartLevel(int sceneIndex){
+        if(sceneIndex < 0){
+            throw new System.ArgumentException("負のシーンインデックスは使えません");
+        }
         SceneManager.LoadScene(sceneIndex);
         Time.timeScale = 1.0f;
 
